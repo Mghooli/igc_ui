@@ -1,0 +1,20 @@
+{
+  "functions": {
+    "targets": [
+      "iBank"
+    ],
+    "ignore": [
+      ".output"
+    ],
+    "source": "functions"
+  },
+  "client": {
+    "source": "client"
+  },
+  "appsail": [
+    {
+      "source": "appsail-nodejs",
+      "name": "ibank"
+    }
+  ]
+}

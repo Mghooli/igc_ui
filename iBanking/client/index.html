@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Banking Capability Factory</title>
+    <!-- Legacy Catalyst Web SDK requested for this prototype. -->
+    <script src="https://static.zohocdn.com/catalyst/sdk/js/4.6.2/catalystWebSDK.js"></script>
+    <script src="/__catalyst/sdk/init.js"></script>
+    <link rel="stylesheet" href="./main.css">
+  </head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">i</div>
+      <div><div class="brand-name">i Banking</div><div class="brand-sub">API capability workbench</div></div>
+    </div>
+    <nav>
+      <div class="nav-label">WORKSPACE</div>
+      <button class="nav-item active" data-page="overview"><span class="nav-icon">▦</span><span>Overview</span></button>
+      <button class="nav-item" data-page="capabilities"><span class="nav-icon">◈</span><span>Capabilities</span><span class="nav-count">7</span></button>
+      <button class="nav-item" data-page="simulator"><span class="nav-icon">⌘</span><span>API Simulator</span></button>
+      <button class="nav-item" data-page="activity"><span class="nav-icon">◷</span><span>Test Activity</span></button>
+      <div class="nav-label">CONFIGURATION</div>
+      <button class="nav-item" data-page="endpoints"><span class="nav-icon">⇄</span><span>MuleSoft Endpoints</span></button>
+      <button class="nav-item" data-page="architecture"><span class="nav-icon">⌬</span><span>Architecture</span></button>
+      <button class="nav-item" data-page="documentation"><span class="nav-icon">▤</span><span>Documentation</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div><span class="connection-dot"></span><span id="sideMode">Mock environment active</span></div>
+      <div style="margin-top:8px">Banking Capability Factory · v2.0</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="breadcrumb">Workspace &nbsp; / &nbsp; <strong id="crumb">Overview</strong></div>
+      <div class="top-actions">
+        <span class="mode-pill" id="modePill">● MOCK MODE</span>
+        <div class="avatar">i</div>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- OVERVIEW -->
+      <section class="page active" id="page-overview">
+        <div class="page-heading">
+          <div><div class="eyebrow">BANKING API PLATFORM</div><h1>Capability overview</h1><p class="subtitle">Design, simulate and validate reusable banking API capabilities from one workspace.</p></div>
+          <button class="btn primary" onclick="go('simulator')">＋ Open API simulator</button>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="stat-top">Banking capabilities <span class="stat-icon">◈</span></div><div class="stat-value">07</div><div class="stat-foot">Reusable API domains</div></div>
+          <div class="stat"><div class="stat-top">Test executions <span class="stat-icon">⌘</span></div><div class="stat-value" id="statTests">0</div><div class="stat-foot">This browser session</div></div>
+          <div class="stat"><div class="stat-top">Successful tests <span class="stat-icon">✓</span></div><div class="stat-value" id="statSuccess">0</div><div class="stat-foot">Mock or configured endpoint</div></div>
+          <div class="stat"><div class="stat-top">Configured endpoints <span class="stat-icon">⇄</span></div><div class="stat-value" id="statEndpoints">0</div><div class="stat-foot">MuleSoft base URLs configured</div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h2>Banking capabilities</h2><div class="subtitle" style="margin-top:4px">Choose a domain to explore its fields and API behavior.</div></div><button class="btn small" onclick="go('capabilities')">View all →</button></div>
+          <div class="panel-body"><div class="cap-grid" id="overviewCaps"></div></div>
+        </div>
+        <div class="two-col section-gap">
+          <div class="panel"><div class="panel-head"><h2>Recent test activity</h2><button class="btn small" onclick="go('activity')">View logs →</button></div><div class="panel-body" id="recentActivity"><div class="empty">No test executions yet. Run a scenario in the API simulator.</div></div></div>
+          <div class="panel"><div class="panel-head"><h2>Environment status</h2></div><div class="panel-body">
+            <div class="activity-row"><div class="activity-icon">🧪</div><div class="activity-info"><strong>Mock response engine</strong><small>Local simulation is available</small></div><span class="status-text ok">READY</span></div>
+            <div class="activity-row"><div class="activity-icon">🔗</div><div class="activity-info"><strong>MuleSoft connectivity</strong><small id="muleStatusText">Not configured</small></div><span class="status-text" id="muleStatus">SETUP</span></div>
+            <div class="activity-row"><div class="activity-icon">🛡️</div><div class="activity-info"><strong>Live transaction safety</strong><small>Mock mode is the default</small></div><span class="status-text ok">SAFE</span></div>
+            <div class="notice" style="margin-top:15px">Configure your MuleSoft API base URL and authentication in <b>MuleSoft Endpoints</b>. Browser requests may require CORS configuration in API Manager or your gateway.</div>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- CAPABILITIES -->
+      <section class="page" id="page-capabilities">
+        <div class="page-heading"><div><div class="eyebrow">API CATALOG</div><h1>Banking capabilities</h1><p class="subtitle">Seven banking domains with sample payloads, scenarios and configurable API routing.</p></div></div>
+        <div class="cap-grid" id="allCaps"></div>
+      </section>
+
+      <!-- SIMULATOR -->
+      <section class="page" id="page-simulator">
+        <div class="page-heading"><div><div class="eyebrow">REQUEST / RESPONSE WORKBENCH</div><h1 id="simTitle">API simulator</h1><p class="subtitle" id="simSubtitle">Configure a request, select a scenario and inspect the response.</p></div><button class="btn" onclick="resetRequest()">↺ Reset request</button></div>
+        <div class="three-col">
+          <div class="panel">
+            <div class="panel-head"><h2>Capability</h2></div>
+            <div class="panel-body" style="padding:10px" id="simCapList"></div>
+            <div style="padding:0 15px 15px"><div class="field"><label for="scenario">Response scenario</label><select id="scenario">
+              <option value="success">200 · Success</option>
+              <option value="validation">400 · Validation error</option>
+              <option value="unauthorized">401 · Unauthorized</option>
+              <option value="duplicate">409 · Duplicate / conflict</option>
+              <option value="notfound">404 · Resource not found</option>
+              <option value="timeout">504 · Gateway timeout</option>
+              <option value="server">500 · Internal server error</option>
+            </select></div>
+            <div class="field" style="margin-top:12px"><label for="bank">Bank adapter</label><select id="bank"><option value="BANK_A">Bank A</option><option value="BANK_B">Bank B</option><option value="BANK_C">Bank C</option></select></div>
+            <div class="field" style="margin-top:12px"><label for="executionMode">Execution mode</label><select id="executionMode" onchange="syncMode()"><option value="mock">Mock simulation</option><option value="live">Call MuleSoft endpoint</option></select><div class="hint">Live mode sends the JSON request to your configured endpoint.</div></div>
+          </div></div>
+          <div class="panel">
+            <div class="panel-head"><h2>Request payload</h2><button class="btn small" onclick="formatRequest()">Format JSON</button></div>
+            <div class="panel-body">
+              <div class="field"><label for="requestEditor">JSON body · application/json</label><textarea id="requestEditor" class="json-editor" spellcheck="false" aria-label="Request JSON"></textarea></div>
+              <div class="endpoint-line"><span class="dot" id="routeDot"></span><span id="routeLabel">Mock route selected</span></div>
+              <div class="run-toolbar"><button class="btn primary" id="runBtn" onclick="runRequest()">▶ Run request</button><button class="btn" onclick="loadSample()">Load sample</button><button class="btn" onclick="copyRequest()">Copy JSON</button></div>
+              <div class="footer-note">Demo data only. Do not enter real customer credentials, PINs, CVVs or sensitive personal information.</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Response</h2><button class="btn small" onclick="copyResponse()">Copy response</button></div>
+            <div class="panel-body">
+              <div id="responseEmpty" class="empty">Your API response will appear here after you run a request.</div>
+              <div id="responseContent" class="hidden">
+                <span id="responseStatus" class="response-status">● 200 OK</span>
+                <div class="response-meta"><span id="responseTime">Time: —</span><span id="responseRequestId">Request ID: —</span></div>
+                <textarea id="responseEditor" class="json-editor" readonly aria-label="Response JSON"></textarea>
+                <div class="footer-note" id="responseNote"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACTIVITY -->
+      <section class="page" id="page-activity">
+        <div class="page-heading"><div><div class="eyebrow">OBSERVABILITY</div><h1>Test activity</h1><p class="subtitle">Requests executed in this browser session.</p></div><button class="btn" onclick="clearActivity()">Clear activity</button></div>
+        <div class="panel"><div class="table-wrap"><table><thead><tr><th>TIME</th><th>CAPABILITY</th><th>BANK</th><th>MODE</th><th>HTTP</th><th>RESULT</th><th>LATENCY</th></tr></thead><tbody id="activityTable"><tr><td colspan="7" class="empty">No executions yet.</td></tr></tbody></table></div></div>
+      </section>
+
+      <!-- ENDPOINTS -->
+      <section class="page" id="page-endpoints">
+        <div class="page-heading"><div><div class="eyebrow">INTEGRATION SETTINGS</div><h1>MuleSoft endpoints</h1><p class="subtitle">Configure API base URLs and optional bearer tokens for the live API mode.</p></div><button class="btn primary" onclick="saveEndpoints()">Save configuration</button></div>
+        <div class="notice" style="margin-bottom:18px"><b>Security note:</b> this demo stores settings in the current browser's localStorage. Do not store production secrets or long-lived credentials here. For production, use a backend or secure gateway to manage authentication, client secrets, tokens and authorization policies.</div>
+        <div class="panel"><div class="panel-head"><h2>Connection configuration</h2><span class="tag amber">Client-side demo</span></div><div class="panel-body">
+          <div class="field-grid">
+            <div class="field full"><label for="baseUrl">MuleSoft API base URL</label><input id="baseUrl" placeholder="https://your-domain.com/api/v1"><span class="hint">Example: https://api.example.com/banking/v1 — use your actual deployed API URL.</span></div>
+            <div class="field"><label for="authType">Authentication</label><select id="authType"><option value="none">None (public / sandbox)</option><option value="bearer">Bearer token</option><option value="clientid">Client ID / Client Secret headers</option></select></div>
+            <div class="field"><label for="authToken">Bearer token</label><input id="authToken" type="password" autocomplete="off" placeholder="Optional — not recommended for production"></div>
+            <div class="field"><label for="clientId">Client ID</label><input id="clientId" autocomplete="off" placeholder="Optional"></div>
+            <div class="field"><label for="clientSecret">Client Secret</label><input id="clientSecret" type="password" autocomplete="off" placeholder="Optional — avoid production secrets here"></div>
+            <div class="field"><label for="timeoutMs">Request timeout (ms)</label><input id="timeoutMs" type="number" min="1000" max="120000" value="15000"></div>
+            <div class="field"><label for="customHeader">Additional header name (optional)</label><input id="customHeader" placeholder="x-correlation-id"></div>
+            <div class="field"><label for="customHeaderValue">Additional header value</label><input id="customHeaderValue" placeholder="demo-correlation-id"></div>
+          </div>
+          <div class="run-toolbar"><button class="btn primary" onclick="saveEndpoints()">Save settings</button><button class="btn" onclick="testEndpoint()">Test connectivity</button><button class="btn" onclick="clearEndpoints()">Clear settings</button></div>
+          <div id="endpointMessage" class="footer-note">Endpoint settings have not been tested.</div>
+        </div></div>
+        <div class="panel section-gap"><div class="panel-head"><h2>Capability route mapping</h2><span class="tag">REST conventions</span></div><div class="panel-body" id="routeMappings"></div></div>
+      </section>
+
+      <!-- DOCUMENTATION -->
+      <section class="page" id="page-documentation">
+        <div class="page-heading">
+          <div><div class="eyebrow">DEVELOPER PORTAL</div><h1>Capability documentation</h1><p class="subtitle">API purpose, contract fields, sample payloads, error handling and bank adapter notes.</p></div>
+          <span class="tag">REFERENCE GUIDE · V1</span>
+        </div>
+        <div class="notice" style="margin-bottom:18px"><b>Documentation status:</b> examples are based on this UI's mock capability model. Bank A, Bank B and Bank C are adapter labels, not official bank API specifications. Confirm live routes, mandatory fields, authentication and response schemas against the deployed MuleSoft APIs.</div>
+        <div class="field-grid" style="margin-bottom:18px">
+          <div class="field"><label for="docBank">Bank adapter</label><select id="docBank"><option value="BANK_A">Bank A</option><option value="BANK_B">Bank B</option><option value="BANK_C">Bank C</option></select><span class="hint">Select the adapter whose notes you want to review.</span></div>
+          <div class="field"><label for="docSearch">Search documentation</label><input id="docSearch" placeholder="Search capability, endpoint or field…"><span class="hint">Filters the capability list below.</span></div>
+        </div>
+        <div class="doc-layout">
+          <div class="panel"><div class="panel-head"><h2>Capabilities</h2><span class="tag">7 domains</span></div><div class="doc-list" id="docCapabilityList"></div></div>
+          <div class="panel doc-content">
+            <div class="panel-head"><div><h2 id="docTitle">Customer Onboarding &amp; KYC</h2><p class="subtitle" id="docPurpose" style="margin-top:5px"></p></div><span class="tag green" id="docMethod">POST</span></div>
+            <div class="doc-meta">
+              <div class="doc-meta-item"><small>ENDPOINT PATH</small><strong id="docPath">/customers/onboarding</strong></div>
+              <div class="doc-meta-item"><small>HTTP METHOD</small><strong id="docMethodMeta">POST</strong></div>
+              <div class="doc-meta-item"><small>SELECTED ADAPTER</small><strong id="docBankMeta">Bank A</strong></div>
+            </div>
+            <div class="doc-tabs" role="tablist">
+              <button class="doc-tab active" data-doc-tab="overview">Overview</button>
+              <button class="doc-tab" data-doc-tab="request">Request schema</button>
+              <button class="doc-tab" data-doc-tab="response">Response example</button>
+              <button class="doc-tab" data-doc-tab="errors">Errors &amp; testing</button>
+            </div>
+            <div class="doc-pane" id="docPane"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ARCHITECTURE -->
+      <section class="page" id="page-architecture">
+        <div class="page-heading"><div><div class="eyebrow">REFERENCE DESIGN</div><h1>Integration architecture</h1><p class="subtitle">An API-led connectivity pattern for reusable banking capabilities.</p></div></div>
+        <div class="panel"><div class="panel-head"><h2>API-led connectivity</h2><span class="tag green">Reference architecture</span></div><div class="panel-body">
+          <div class="arch-flow">
+            <div class="arch-node"><div class="big">🖥️</div><strong>Experience layer</strong><small>HTML / Zoho Catalyst UI</small></div>
+            <div class="arch-node"><div class="big">🔀</div><strong>Experience API</strong><small>Consumer-facing contracts</small></div>
+            <div class="arch-node"><div class="big">⚙️</div><strong>Process API</strong><small>Business orchestration</small></div>
+            <div class="arch-node"><div class="big">🔌</div><strong>System API</strong><small>Bank adapters / connectors</small></div>
+            <div class="arch-node"><div class="big">🏦</div><strong>Banking systems</strong><small>Core banking / cards / loans</small></div>
+          </div>
+          <div class="notice" style="margin-top:22px">Suggested flow: the UI calls a secured MuleSoft Experience API; the Process API applies business rules and routes to System APIs; each System API adapts to the relevant core banking provider. Enforce authentication, authorization, rate limiting, input validation, idempotency, audit logging and appropriate data masking at the relevant layers.</div>
+        </div></div>
+        <div class="two-col section-gap">
+          <div class="panel"><div class="panel-head"><h2>Recommended controls</h2></div><div class="panel-body">
+            <div class="activity-row"><div class="activity-icon">🔐</div><div class="activity-info"><strong>OAuth 2.0 / client policies</strong><small>Protect API access and scopes.</small></div></div>
+            <div class="activity-row"><div class="activity-icon">🧾</div><div class="activity-info"><strong>Correlation and audit IDs</strong><small>Trace requests across API layers.</small></div></div>
+            <div class="activity-row"><div class="activity-icon">🔁</div><div class="activity-info"><strong>Idempotency</strong><small>Prevent duplicate payment submissions.</small></div></div>
+            <div class="activity-row"><div class="activity-icon">🛡️</div><div class="activity-info"><strong>Validation and data masking</strong><small>Protect sensitive customer and account data.</small></div></div>
+          </div></div>
+          <div class="panel"><div class="panel-head"><h2>Suggested HTTP conventions</h2></div><div class="panel-body">
+            <div class="activity-row"><div class="activity-info"><strong>200 / 201</strong><small>Successful read or resource creation.</small></div></div>
+            <div class="activity-row"><div class="activity-info"><strong>400 / 422</strong><small>Invalid fields or business rule failure.</small></div></div>
+            <div class="activity-row"><div class="activity-info"><strong>401 / 403</strong><small>Authentication or authorization failure.</small></div></div>
+            <div class="activity-row"><div class="activity-info"><strong>409 / 429 / 5xx</strong><small>Conflict, rate limit or downstream failure.</small></div></div>
+          </div></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="./main.js"></script>
+</body>
+</html>

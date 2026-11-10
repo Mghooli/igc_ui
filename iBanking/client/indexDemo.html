@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Banking Capability Factory</title>
+    <!-- Legacy Catalyst Web SDK requested for this prototype. -->
+    <script src="https://static.zohocdn.com/catalyst/sdk/js/4.6.2/catalystWebSDK.js"></script>
+    <script src="/__catalyst/sdk/init.js"></script>
+    <link rel="stylesheet" href="./main.css">
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="mark">i<span></span></div>
+          <div><b>iBank</b><small>CAPABILITY PLATFORM</small></div>
+        </div>
+        <div class="label">WORKSPACE</div>
+        <nav class="nav">
+          <button class="active" data-page="overview">
+            <span>▦</span>Overview</button
+          >
+          <!-- <button data-page="onboarding">
+            <span>♙</span>Customer onboarding</button> -->
+          <button data-page="simulator"><span>⌘</span>API simulator</button
+          ><button data-page="architecture"><span>◈</span>Architecture</button>
+        </nav>
+        <div class="side-bottom">
+          <div class="env">
+            <i class="dot"></i>
+            <div><b>Development</b><small>Mock environment</small></div>
+          </div>
+          <div class="user">
+            <div class="avatar">i</div>
+            <div><b>iBank Console</b><small>Project workspace</small></div>
+          </div>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="top">
+          <div class="crumb">
+            Workspace &nbsp;/&nbsp; <b id="crumb">Overview</b>
+          </div>
+          <div class="topright">
+            <span class="sdk"
+              ><i id="sdkdot"></i
+              ><span id="sdktext">Preview mode · no backend</span></span
+            >
+            <div class="avatar">i</div>
+          </div>
+        </header>
+        <section class="page active" id="overview">
+          <div class="heading">
+            <div>
+              <div class="eyebrow">BANKING INTEGRATION PLATFORM</div>
+              <h1>
+                Good morning, builder <span style="color: #e4a74a">✦</span>
+              </h1>
+              <p>Design once. Integrate across banks. Reuse everywhere.</p>
+            </div>
+            <button class="primary" data-go="onboarding">
+              ＋ New onboarding
+            </button>
+          </div>
+          <div class="hero">
+            <div class="hero-copy">
+              <div class="chip">
+                <i></i> CAPABILITY FACTORY <span>/</span> MVP
+              </div>
+              <h2>One capability.<br />Multiple banking systems.</h2>
+              <p>
+                Build reusable banking journeys with a common API contract and
+                configurable bank adapters.
+              </p>
+              <button class="hero-button" data-go="simulator">
+                Open API simulator →
+              </button>
+            </div>
+            <div class="art">
+              <div class="orbit"></div>
+              <div class="orbit two"></div>
+              <div class="hub">API<br />↔</div>
+              <div class="node a">▣<br />Bank A</div>
+              <div class="node b">▤<br />Bank B</div>
+              <div class="node c">▥<br />Bank C</div>
+            </div>
+          </div>
+          <div class="section-title">
+            <div>
+              <h3>Platform overview</h3>
+              <p>Your current demo environment at a glance.</p>
+            </div>
+            <span class="period">MOCK DATA · SESSION ONLY</span>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-top">
+                Applications tested <span class="badge-icon blue">▣</span>
+              </div>
+              <div class="value" id="total">128</div>
+              <div class="foot">
+                <span class="trend">↗ 12%</span> vs. previous demo
+              </div>
+              <div class="mini">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat-top">
+                Reusable capabilities <span class="badge-icon purple">◈</span>
+              </div>
+              <div class="value">04</div>
+              <div class="foot">Ready to extend</div>
+              <div class="mini"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="stat">
+              <div class="stat-top">
+                Mock bank adapters <span class="badge-icon green">⇄</span>
+              </div>
+              <div class="value">03</div>
+              <div class="foot">
+                <span style="color: #149d76">● Connected</span> to simulator
+              </div>
+              <div class="mini"><i></i><i></i><i></i></div>
+            </div>
+            <div class="stat">
+              <div class="stat-top">
+                Test pass rate <span class="badge-icon orange">✓</span>
+              </div>
+              <div class="value">
+                96.8<span style="font-size: 15px">%</span>
+              </div>
+              <div class="foot">Simulated results</div>
+              <div class="progress"><i></i></div>
+            </div>
+          </div>
+          <div class="lower">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Recent test activity</h3>
+                  <p class="panel-sub">Latest simulator runs</p>
+                </div>
+                <button class="link" data-go="simulator">
+                  View simulator →
+                </button>
+              </div>
+              <div class="tablewrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>TEST RUN</th>
+                      <th>BANK</th>
+                      <th>SCENARIO</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody id="activity">
+                    <tr>
+                      <td><b>ONB-1048</b><small>Just now</small></td>
+                      <td><span class="bank">A</span>Bank A</td>
+                      <td>Successful onboarding</td>
+                      <td><span class="status">● Passed</span></td>
+                    </tr>
+                    <tr>
+                      <td><b>ONB-1047</b><small>8 min ago</small></td>
+                      <td>
+                        <span
+                          class="bank"
+                          style="background: #f2edff; color: #7856d9"
+                          >B</span
+                        >Bank B
+                      </td>
+                      <td>Invalid email</td>
+                      <td><span class="status warn">● Expected error</span></td>
+                    </tr>
+                    <tr>
+                      <td><b>ONB-1046</b><small>21 min ago</small></td>
+                      <td>
+                        <span
+                          class="bank"
+                          style="background: #fff3e5; color: #dc8a34"
+                          >C</span
+                        >Bank C
+                      </td>
+                      <td>Duplicate application</td>
+                      <td><span class="status">● Passed</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Capability catalogue</h3>
+                  <p class="panel-sub">Reusable business journeys</p>
+                </div>
+                <span class="tag">04</span>
+              </div>
+              <div class="caprow">
+                <div class="capicon blue">♙</div>
+                <div>
+                  <b>Customer onboarding</b
+                  ><small>Identity · application · validation</small>
+                </div>
+                <span class="tag ready">MVP</span>
+              </div>
+              <div class="caprow">
+                <div class="capicon green">⇄</div>
+                <div>
+                  <b>Payments</b
+                  ><small>Initiate · status · reconciliation</small>
+                </div>
+                <span class="tag">Planned</span>
+              </div>
+              <div class="caprow">
+                <div class="capicon purple">▣</div>
+                <div>
+                  <b>Accounts</b><small>Account details · balances</small>
+                </div>
+                <span class="tag">Planned</span>
+              </div>
+              <div class="caprow">
+                <div class="capicon orange">▤</div>
+                <div><b>Cards</b><small>Issue · activate · block</small></div>
+                <span class="tag">Planned</span>
+              </div>
+            </div>
+          </div>
+          <div class="note">
+            <span>ⓘ</span>
+            <div>
+              <b>Prototype environment</b>
+              <p>
+                Metrics and activity are illustrative demo data. No real bank
+                system is connected.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section class="page" id="onboarding">
+          <div class="heading">
+            <div>
+              <div class="eyebrow">CAPABILITY / CUSTOMER ONBOARDING</div>
+              <h1>New onboarding request</h1>
+              <p>
+                Submit a standard request and route it to a mock bank adapter.
+              </p>
+            </div>
+            <span class="demo">● MOCK BACKEND</span>
+          </div>
+          <div class="formgrid">
+            <div class="panel fields">
+              <div class="panel-head">
+                <div>
+                  <h3>Customer details</h3>
+                  <p class="panel-sub">Use synthetic data for this demo.</p>
+                </div>
+                <span class="tag">STEP 1 OF 1</span>
+              </div>
+              <form id="onboardform">
+                <div class="field">
+                  <label>Full name <em>*</em></label
+                  ><input
+                    id="name"
+                    required
+                    value="Arun Kumar"
+                    minlength="2"
+                  /><small style="color: #a0aaba"
+                    >Enter the customer's full name.</small
+                  >
+                </div>
+                <div class="fieldrow">
+                  <div class="field">
+                    <label>Customer reference <em>*</em></label
+                    ><input id="customer" required value="CUST1001" />
+                  </div>
+                  <div class="field">
+                    <label>Email address <em>*</em></label
+                    ><input
+                      id="email"
+                      type="email"
+                      required
+                      value="arun@example.com"
+                    />
+                  </div>
+                </div>
+                <div class="fieldrow">
+                  <div class="field">
+                    <label>Target bank</label
+                    ><select id="bank">
+                      <option value="BANK_A">Bank A · Adapter A</option>
+                      <option value="BANK_B">Bank B · Adapter B</option>
+                      <option value="BANK_C">Bank C · Adapter C</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Test scenario</label
+                    ><select id="scenario">
+                      <option value="success">Successful onboarding</option>
+                      <option value="invalid">Invalid request</option>
+                      <option value="duplicate">Duplicate application</option>
+                      <option value="timeout">Downstream timeout</option>
+                      <option value="error">Bank service error</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Request note (optional)</label
+                  ><textarea
+                    rows="3"
+                    placeholder="Add a short note for this test run..."
+                  ></textarea>
+                </div>
+                <div class="actions">
+                  <button class="secondary" type="reset">Reset form</button
+                  ><button class="primary" type="submit">
+                    Run onboarding →
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="panel sideinfo">
+              <div class="infomark">✦</div>
+              <h3>What happens next?</h3>
+              <p>
+                Your request passes through the conceptual layers planned for
+                the production architecture.
+              </p>
+              <div class="steps">
+                <div class="step">
+                  <span>1</span>
+                  <div>
+                    <b>Validate request</b
+                    ><small>Required fields and email format</small>
+                  </div>
+                </div>
+                <div class="step">
+                  <span>2</span>
+                  <div>
+                    <b>Apply business rules</b
+                    ><small>Scenario and duplicate handling</small>
+                  </div>
+                </div>
+                <div class="step">
+                  <span>3</span>
+                  <div>
+                    <b>Route to adapter</b
+                    ><small>Bank-specific mock response</small>
+                  </div>
+                </div>
+                <div class="step">
+                  <span>4</span>
+                  <div>
+                    <b>Return standard result</b
+                    ><small>Consistent response contract</small>
+                  </div>
+                </div>
+              </div>
+              <div class="warningbox">
+                This demo does not create a real bank account or contact a bank.
+              </div>
+            </div>
+          </div>
+          <div id="onboardresult" class="panel result hidden">
+            <div class="panel-head">
+              <div>
+                <h3>Onboarding response</h3>
+                <p class="panel-sub" id="resultsummary">
+                  Latest simulated result
+                </p>
+              </div>
+              <button class="secondary" id="copyresult">Copy JSON</button>
+            </div>
+            <div class="meta">
+              <span id="resultstatus" class="status">● 201 Created</span
+              ><span id="duration">Duration: 184 ms</span
+              ><span id="resultbank">Bank A</span>
+            </div>
+            <pre id="resultjson">{}</pre>
+          </div>
+        </section>
+        <section class="page" id="simulator">
+          <div class="heading">
+            <div>
+              <div class="eyebrow">DEVELOPER TOOLS</div>
+              <h1>API simulator</h1>
+              <p>Explore the common contract and test bank adapter behavior.</p>
+            </div>
+            <span class="demo">● LOCAL SIMULATION</span>
+          </div>
+          <div class="simgrid">
+            <div class="panel request">
+              <div class="panel-head">
+                <div>
+                  <h3>Request builder</h3>
+                  <p class="panel-sub">POST /onboarding/applications</p>
+                </div>
+                <span class="method">POST</span>
+              </div>
+              <div class="endpoint">
+                <span>POST</span><code>/onboarding/applications</code
+                ><button id="copyendpoint">⧉</button>
+              </div>
+              <div class="field">
+                <label>Bank adapter</label
+                ><select id="simbank">
+                  <option value="BANK_A">Bank A</option>
+                  <option value="BANK_B">Bank B</option>
+                  <option value="BANK_C">Bank C</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Scenario</label
+                ><select id="simscenario">
+                  <option value="success">Success — 201</option>
+                  <option value="invalid">Invalid input — 400</option>
+                  <option value="duplicate">Duplicate — 409</option>
+                  <option value="timeout">Timeout — 504</option>
+                  <option value="error">Downstream error — 502</option>
+                </select>
+              </div>
+              <div class="code-label">
+                <span>JSON BODY</span><span>application/json</span>
+              </div>
+              <pre
+                id="editor"
+                class="editor"
+                contenteditable="true"
+                spellcheck="false"
+              >
+{
+  "partnerReferenceId": "PARTNER-2026-000101",
+  "customerType": "INDIVIDUAL",
+  "productCode": "SAVINGS_ACCOUNT",
+  "personalDetails": {
+    "firstName": "Arun",
+    "middleName": "Kumar",
+    "lastName": "R",
+    "dateOfBirth": "1998-05-14",
+    "gender": "MALE",
+    "email": "arun.test@example.com",
+    "mobileNumber": "+919876500123"
+  },
+  "address": {
+    "addressType": "RESIDENTIAL",
+    "addressLine1": "12 Sample Street",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "postalCode": "600001",
+    "country": "IN"
+  },
+  "identification": {
+    "documentType": "PAN",
+    "documentReference": "PAN-MASKED-0001"
+  },
+  "kyc": {
+    "kycMode": "VIDEO_KYC",
+    "consentProvided": true
+  },
+  "channel": "PARTNER_PORTAL"
+}</pre
+              >
+              <button class="primary full" id="send">
+                ▶ &nbsp; Send request
+              </button>
+            </div>
+            <div class="panel response">
+              <div class="panel-head">
+                <div>
+                  <h3>Response</h3>
+                  <p class="panel-sub">Standardized mock response</p>
+                </div>
+                <button class="link" id="copyresponse">Copy JSON</button>
+              </div>
+              <div id="empty" class="empty">
+                <div class="emptyicon">⌁</div>
+                <b>Ready to test</b>
+                <p>
+                  Choose a scenario and send a request to see the response here.
+                </p>
+              </div>
+              <div id="responsewrap" class="hidden">
+                <div class="resphead">
+                  <span id="httpstatus" class="status">201 Created</span
+                  ><span id="simduration">184 ms</span>
+                </div>
+                <pre id="responsejson">{}</pre>
+                <div id="respnote" class="respnote"></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel contract">
+            <div class="panel-head">
+              <div>
+                <h3>Common response contract</h3>
+                <p class="panel-sub">
+                  Keep the consumer response stable across bank adapters.
+                </p>
+              </div>
+              <span class="tag">v1.0</span>
+            </div>
+            <div class="contractgrid">
+              <div>
+                <small>applicationId</small><b>string</b>
+                <p>Unique demo application reference</p>
+              </div>
+              <div>
+                <small>status</small><b>string</b>
+                <p>RECEIVED, REJECTED or FAILED</p>
+              </div>
+              <div>
+                <small>bankCode</small><b>string</b>
+                <p>Selected bank adapter code</p>
+              </div>
+              <div>
+                <small>correlationId</small><b>string</b>
+                <p>Trace identifier for this request</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="page" id="architecture">
+          <div class="heading">
+            <div>
+              <div class="eyebrow">PLATFORM DESIGN</div>
+              <h1>Solution architecture</h1>
+              <p>
+                A reusable API-led design, starting with a mock bank
+                integration.
+              </p>
+            </div>
+            <span class="demo">MVP ARCHITECTURE</span>
+          </div>
+          <div class="panel archpanel">
+            <div class="panel-head">
+              <div>
+                <h3>Request lifecycle</h3>
+                <p class="panel-sub">
+                  Common contract → orchestration → bank-specific adapter
+                </p>
+              </div>
+              <span class="tag">LOGICAL VIEW</span>
+            </div>
+            <div class="archflow">
+              <div class="archnode clientnode">
+                <div class="symbol">▦</div>
+                <b>Web UI</b><small>Catalyst Client</small>
+              </div>
+              <div class="arrow"><span>HTTP / JSON</span><b>→</b></div>
+              <div class="stack">
+                <div class="archnode expnode">
+                  <div class="symbol">◇</div>
+                  <b>Experience API</b><small>Consumer contract</small>
+                </div>
+                <div style="text-align: center; color: #9b8bda">↓</div>
+                <div class="archnode procnode">
+                  <div class="symbol">⇄</div>
+                  <b>Process API</b><small>Rules & orchestration</small>
+                </div>
+                <div style="text-align: center; color: #9b8bda">↓</div>
+                <div class="archnode sysnode">
+                  <div class="symbol">⌘</div>
+                  <b>System API</b><small>Bank adapter interface</small>
+                </div>
+              </div>
+              <div class="arrow"><span>Adapter routing</span><b>→</b></div>
+              <div class="banks">
+                <div class="archnode banknode">
+                  <div class="symbol">▣</div>
+                  <div><b>Bank A adapter</b><small>Mock response</small></div>
+                </div>
+                <div class="archnode banknode">
+                  <div class="symbol">▤</div>
+                  <div><b>Bank B adapter</b><small>Mock response</small></div>
+                </div>
+                <div class="archnode banknode">
+                  <div class="symbol">▥</div>
+                  <div><b>Bank C adapter</b><small>Mock response</small></div>
+                </div>
+              </div>
+            </div>
+            <div class="cross">
+              <div class="infomark" style="margin: 0; flex-shrink: 0">⚙</div>
+              <div>
+                <b>Cross-cutting capabilities</b>
+                <p>
+                  Authentication · validation · error mapping · correlation IDs
+                  · logging · automated tests · versioning
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="lower archlower">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Build now</h3>
+                  <p class="panel-sub">Included in this prototype</p>
+                </div>
+              </div>
+              <div class="checkrow"><span>✓</span> Responsive web UI</div>
+              <div class="checkrow"><span>✓</span> Local mock scenarios</div>
+              <div class="checkrow"><span>✓</span> Standard JSON response</div>
+              <div class="checkrow">
+                <span>✓</span> Catalyst Web SDK script hooks
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Connect later</h3>
+                  <p class="panel-sub">Next implementation phase</p>
+                </div>
+              </div>
+              <div class="planrow">
+                <span>○</span> Catalyst Function / API endpoint
+              </div>
+              <div class="planrow">
+                <span>○</span> Catalyst Data Store persistence
+              </div>
+              <div class="planrow">
+                <span>○</span> MuleSoft Experience and Process APIs
+              </div>
+              <div class="planrow">
+                <span>○</span> Authorized real-bank adapter
+              </div>
+            </div>
+          </div> -->
+        </section>
+        <footer>
+          Banking Capability Factory · Prototype v0.1 · Synthetic data only
+        </footer>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="./main.js"></script>
+  </body>
+</html>
